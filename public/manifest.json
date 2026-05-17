@@ -1,0 +1,55 @@
+{
+  "name": "Knitify — Knitting Journal",
+  "short_name": "Knitify",
+  "description": "Track your knitting patterns, projects and journal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf6ee",
+  "theme_color": "#8b5e52",
+  "orientation": "portrait-primary",
+  "categories": ["lifestyle", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Projects",
+      "url": "/projects",
+      "description": "View your knitting projects"
+    },
+    {
+      "name": "Patterns",
+      "url": "/patterns",
+      "description": "Browse your pattern library"
+    },
+    {
+      "name": "Journal",
+      "url": "/journal",
+      "description": "Open your knitting journal"
+    }
+  ]
+}

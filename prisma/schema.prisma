@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Pattern {
+  id          String    @id @default(cuid())
+  name        String
+  designer    String?
+  source      String?
+  sourceUrl   String?
+  category    String?
+  yarnWeight  String?
+  difficulty  String?
+  notes       String?
+  isFavorite  Boolean   @default(false)
+  status      String    @default("wishlist")
+  coverImage  String?
+  patternFile String?
+  readerState String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  projects    Project[]
+}
+
+model Yarn {
+  id              String    @id @default(cuid())
+  brand           String
+  name            String
+  colorway        String?
+  colorCode       String?
+  weight          String?
+  fiber           String?
+  yardage         Int?
+  skeinCount      Float?
+  yardagePerSkein Int?
+  color           String?
+  notes           String?
+  image           String?
+  status          String    @default("stash")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  projectYarns    ProjectYarn[]
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String
+  patternId   String?
+  status      String    @default("planning")
+  startDate   DateTime?
+  endDate     DateTime?
+  needleSize  String?
+  gauge       String?
+  size        String?
+  notes       String?
+  coverImage  String?
+  progress    Int?
+  currentRow     Int?
+  totalRows      Int?
+  gaugeSwatchId  String?
+  modifications  String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  pattern        Pattern?      @relation(fields: [patternId], references: [id])
+  gaugeSwatch    GaugeSwatch?  @relation(fields: [gaugeSwatchId], references: [id])
+  yarns          ProjectYarn[]
+  journalEntries JournalEntry[]
+  sessions       KnittingSession[]
+}
+
+model KnittingSession {
+  id        String    @id @default(cuid())
+  projectId String
+  startTime DateTime  @default(now())
+  endTime   DateTime?
+  duration  Int?
+  createdAt DateTime  @default(now())
+
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectYarn {
+  id        String  @id @default(cuid())
+  projectId String
+  yarnId    String
+  amount    Float?
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  yarn      Yarn    @relation(fields: [yarnId], references: [id])
+}
+
+model GaugeSwatch {
+  id            String    @id @default(cuid())
+  stitchesPer10 Float
+  rowsPer10     Float?
+  needleSize    String?
+  yarnBrand     String?
+  yarnName      String?
+  yarnWeight    String?
+  notes         String?
+  image         String?
+  yarns         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  projects      Project[]
+}
+
+model Needle {
+  id        String   @id @default(cuid())
+  type      String
+  size      String
+  material  String?
+  brand     String?
+  length    String?
+  quantity  Int      @default(1)
+  notes     String?
+  status    String   @default("owned")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model JournalEntry {
+  id        String   @id @default(cuid())
+  date      DateTime @default(now())
+  title     String?
+  content   String
+  mood      String?
+  projectId String?
+  images    String?
+  tags      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project   Project? @relation(fields: [projectId], references: [id])
+}
