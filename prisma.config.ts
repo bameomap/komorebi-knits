@@ -9,6 +9,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: `file:${path.join(__dirname, "prisma", "knitting.db")}`,
+    url: process.env.DATABASE_URL ?? `file:${path.join(__dirname, "prisma", "knitting.db")}`,
   },
 });
