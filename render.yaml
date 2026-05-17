@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: komorebi-knits
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:/data/knitting.db
+      - key: UPLOAD_DIR
+        value: /data/uploads
