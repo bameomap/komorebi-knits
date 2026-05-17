@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   // Fetch existing names to skip duplicates
   const existing = await prisma.pattern.findMany({ select: { name: true } });
-  const existingNames = new Set(existing.map((p) => p.name.toLowerCase()));
+  const existingNames = new Set(existing.map((p: { name: string }) => p.name.toLowerCase()));
 
   const toInsert = rows.filter((r) => r.name && !existingNames.has(r.name.toLowerCase()));
 
